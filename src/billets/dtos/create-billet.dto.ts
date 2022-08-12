@@ -1,9 +1,9 @@
-import { IsString } from 'class-validator'
+import { IsNumberString } from 'class-validator'
 
 export class CreateBilletDto {
-  @IsString()
+  @IsNumberString()
   billet: string;
-  
-  @IsString()
+
+  @IsNumberString()
   amount: string;
 }
