@@ -6,6 +6,7 @@ import {
   NotFoundException,
   Param,
   Post,
+  Session,
 } from '@nestjs/common';
 import { AuthService } from 'src/users/auth/auth.service';
 
@@ -20,15 +21,19 @@ export class UsersController {
   constructor(private usersService: UsersService, private authService: AuthService) {}
 
   @Post('/sign_up')
-  async createUser(@Body() body: CreateUserDto) {
+  async createUser(@Body() body: CreateUserDto, @Session() session: any) {
     const user = await this.authService.registration(body.email, body.password);
-
+    session.userId = user.id;
+    
     return { id: user.id };
   }
 
   @Post('/sign_in')
-  login(@Body() body: CreateUserDto) {
-    return this.authService.login(body.email, body.password);
+  async login(@Body() body: CreateUserDto, @Session() session: any) {
+    const user = await this.authService.login(body.email, body.password);
+    session.userId = user.id;
+    
+    return user;
   }
 
   @Get('/:id')
