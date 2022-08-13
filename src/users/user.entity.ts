@@ -1,4 +1,5 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany, AfterInsert, AfterRemove } from 'typeorm';
+
 import { Billet } from 'src/billets/billets.entity';
 
 @Entity()
@@ -12,6 +13,12 @@ export class User {
   @Column()
   password: string;
 
+  @Column({
+    default: 0,
+    nullable: true,
+  })
+  cashback: number;
+
   @OneToMany(() => Billet, (billet) => billet.user)
   billets: Billet[];
 
@@ -22,6 +29,6 @@ export class User {
 
   @AfterRemove()
   logRemove() {
-    console.log('Removed User with id', this.id);
+    console.log('Removed User successfully');
   }
 }
