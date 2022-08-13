@@ -26,6 +26,11 @@ export class UsersController {
     return { id: user.id };
   }
 
+  @Post('/sign_in')
+  login(@Body() body: CreateUserDto) {
+    return this.authService.login(body.email, body.password);
+  }
+
   @Get('/:id')
   async findUser(@Param('id') id: string) {
     const user = await this.usersService.findById(parseInt(id));
