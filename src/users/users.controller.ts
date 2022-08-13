@@ -3,9 +3,11 @@ import {
   Controller,
   Delete,
   Get,
+  HttpCode,
   NotFoundException,
   Param,
   Post,
+  Response,
   Session,
 } from '@nestjs/common';
 import { AuthService } from 'src/users/auth/auth.service';
@@ -24,7 +26,7 @@ export class UsersController {
   async createUser(@Body() body: CreateUserDto, @Session() session: any) {
     const user = await this.authService.registration(body.email, body.password);
     session.userId = user.id;
-    
+
     return { id: user.id };
   }
 
@@ -32,8 +34,19 @@ export class UsersController {
   async login(@Body() body: CreateUserDto, @Session() session: any) {
     const user = await this.authService.login(body.email, body.password);
     session.userId = user.id;
-    
+
     return user;
+  }
+
+  @Post('/sign_out')
+  @HttpCode(200)
+  logout(@Session() session: any) {
+    session.userId = null;
+  }
+
+  @Get('/whoami')
+  whoAmI(@Session() session: any) {
+    return this.usersService.findById(session.userId)
   }
 
   @Get('/:id')
