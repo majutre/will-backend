@@ -1,4 +1,4 @@
-import { Billet } from "src/billets/models/billets.model";
+import { Billet } from "./billets.entity";
 
 export class BilletsRepository {
   async findOne() {}
