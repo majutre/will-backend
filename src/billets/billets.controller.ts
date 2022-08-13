@@ -14,7 +14,7 @@ export class BilletsController {
   createBillet(@Body() body: CreateBilletDto, @Response() res) {
     const url = 'https://run.mocky.io/v3/0bca48f0-16db-4726-96a8-d4206306f698'
     return axios.post(url, body).then(function (response) {
-      res.send(response.data);
+      res.status(200).send(response.data);
     })
     .catch(function (error) {
       console.log(error);
