@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany, AfterInsert, AfterRemove } from 'typeorm';
 import { Billet } from 'src/billets/billets.entity';
 
 @Entity()
@@ -14,4 +14,14 @@ export class User {
 
   @OneToMany(() => Billet, (billet) => billet.user)
   billets: Billet[];
+
+  @AfterInsert()
+  logInsert() {
+    console.log('Inserted User with id', this.id);
+  }
+
+  @AfterRemove()
+  logRemove() {
+    console.log('Removed User with id', this.id);
+  }
 }

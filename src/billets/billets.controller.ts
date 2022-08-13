@@ -5,7 +5,7 @@ import { BilletsService } from './billets.service';
 
 @Controller('billets')
 export class BilletsController {
-  private billetsService: BilletsService = new BilletsService();
+  constructor(private billetsService: BilletsService) {}
 
   @Get()
   listBillets() {}
