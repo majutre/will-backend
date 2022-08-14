@@ -1,6 +1,6 @@
 import { IsNumberString } from 'class-validator'
 
-export class CreateBilletDto {
+export class CreateTransactionDto {
   @IsNumberString()
   billet: string;
 

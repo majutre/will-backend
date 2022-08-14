@@ -5,10 +5,10 @@ import * as session from 'express-session';
 
 import { AppService } from './app.service';
 import { AppController } from './app.controller';
-import { BilletsModule } from './billets/billets.module';
+import { TransactionsModule } from './transactions/transactions.module';
 import { UsersModule } from './users/users.module';
 import { User } from './users/user.entity';
-import { Billet } from './billets/billets.entity';
+import { Transaction } from './transactions/transaction.entity';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
@@ -23,13 +23,13 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
         return {
           type: 'sqlite',
           database: config.get<string>('DB_NAME'),
-          entities: [User, Billet],
+          entities: [User, Transaction],
           synchronize: true,
         };
       },
     }),
     UsersModule,
-    BilletsModule,
+    TransactionsModule,
   ],
   providers: [
     AppService,

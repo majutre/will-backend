@@ -1,6 +1,6 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany, AfterInsert, AfterRemove } from 'typeorm';
 
-import { Billet } from 'src/billets/billets.entity';
+import { Transaction } from 'src/transactions/transaction.entity';
 
 @Entity()
 export class User {
@@ -19,8 +19,8 @@ export class User {
   })
   cashback: number;
 
-  // @OneToMany(() => Billet, (billet) => billet.user)
-  // billets: Billet[];
+  // @OneToMany(() => Transaction, (transaction) => transaction.user)
+  // transactions: Transaction[];
 
   @AfterInsert()
   logInsert() {

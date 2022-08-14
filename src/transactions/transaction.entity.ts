@@ -2,7 +2,7 @@ import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
 import { User } from 'src/users/user.entity';
 
 @Entity()
-export class Billet {
+export class Transaction {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -15,6 +15,6 @@ export class Billet {
   @Column({ nullable: true })
   transactionId: string;
 
-  // @ManyToOne(() => User, (user) => user.billets)
+  // @ManyToOne(() => User, (user) => user.transactions)
   // user: User;
 }
