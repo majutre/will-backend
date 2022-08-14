@@ -1,5 +1,7 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, ValidationPipe } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { APP_PIPE } from '@nestjs/core';
+import * as session from 'express-session';
 
 import { AppService } from './app.service';
 import { AppController } from './app.controller';
@@ -19,7 +21,27 @@ import { Billet } from './billets/billets.entity';
     UsersModule,
     BilletsModule,
   ],
-  providers: [AppService],
+  providers: [
+    AppService,
+    {
+      provide: APP_PIPE,
+      useValue: new ValidationPipe({
+        whitelist: true,
+      }),
+    },
+  ],
   controllers: [AppController],
 })
-export class AppModule {}
+export class AppModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(
+        session({
+          secret: 'my-secret',
+          resave: false,
+          saveUninitialized: false,
+        }),
+      )
+      .forRoutes('*');
+  }
+}
