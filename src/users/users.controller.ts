@@ -7,25 +7,26 @@ import {
   NotFoundException,
   Param,
   Post,
-  Response,
   Session,
-  UseInterceptors,
+  UseGuards,
 } from '@nestjs/common';
-import { AuthService } from 'src/users/auth/auth.service';
 
+import { AuthService } from 'src/users/auth/auth.service';
 import { Serialize } from 'src/interceptors/serialize.interceptor';
 import { CreateUserDto } from './dtos/create-user.dto';
 import { UserDto } from './dtos/user.dto';
 import { UsersService } from './users.service';
 import { CurrentUser } from './decorators/current-user.decorator';
-import { CurrentUserInterceptor } from './interceptors/current-user.interceptor';
 import { User } from './user.entity';
+import { AuthGuard } from 'src/guards/auth.guard';
 
 @Serialize(UserDto)
-@UseInterceptors(CurrentUserInterceptor)
 @Controller('users')
 export class UsersController {
-  constructor(private usersService: UsersService, private authService: AuthService) {}
+  constructor(
+    private usersService: UsersService,
+    private authService: AuthService,
+  ) {}
 
   @Post('/sign_up')
   async createUser(@Body() body: CreateUserDto, @Session() session: any) {
@@ -50,6 +51,7 @@ export class UsersController {
   }
 
   @Get('/whoami')
+  @UseGuards(AuthGuard)
   whoAmI(@CurrentUser() user: User) {
     return user;
   }
