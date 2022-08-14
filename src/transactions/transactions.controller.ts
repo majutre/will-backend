@@ -10,7 +10,6 @@ import {
 } from '@nestjs/common';
 import { CreateTransactionDto } from './dtos/create-transaction.dto';
 import { TransactionsService } from './transactions.service';
-import { UpdateTransactionDto } from './dtos/update-transaction.dto';
 
 @Controller('billets')
 export class TransactionsController {
@@ -28,7 +27,7 @@ export class TransactionsController {
       body.billet,
       body.amount,
     );
-    let transactionId = transaction.id;
+    const transactionId = transaction.id;
       
     const response = await axios
       .post(url, body)
@@ -37,7 +36,7 @@ export class TransactionsController {
 
     const confirmationId = response.split('"')[3];   
     await this.updateTransaction(transactionId, confirmationId);
-
+    
     return res.status(201).send(await this.transactionsService.findOne(transactionId))
   }
 
