@@ -34,4 +34,16 @@ export class UsersService {
 
     return this.repository.remove(user);
   }
+
+  async addCashback(id: number, amount: number) {
+    const user = await this.repository.findOneBy({ id: id });
+
+    if (amount <= 500) {
+      user.cashback += amount * 0.1;
+    } else {
+      user.cashback += amount * 0.05;
+    }
+
+    return this.repository.save(user);
+  }
 }
