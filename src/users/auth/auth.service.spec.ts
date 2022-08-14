@@ -1,9 +1,9 @@
 import { Test } from '@nestjs/testing';
+import { BadRequestException } from '@nestjs/common';
 
 import { AuthService } from './auth.service';
 import { UsersService } from '../users.service';
 import { User } from '../user.entity';
-import { BadRequestException } from '@nestjs/common';
 
 describe('AuthService', () => {
   let service: AuthService;
@@ -60,8 +60,7 @@ describe('AuthService', () => {
   });
 
   it('should throw an error if user signs up with an e-mail in use', async () => {
-    usersService.findByEmail = () =>
-      Promise.resolve([{ id: 1, email: 'test', password: '123' } as User]);
+    await service.registration('asdf@asdf', '123456');
     await expect(service.registration('asdf@asdf', '123456')).rejects.toEqual(
       new BadRequestException('Este e-mail já está em uso'),
     );
@@ -74,8 +73,7 @@ describe('AuthService', () => {
   });
 
   it('should throw an error if invalid password is provided', async () => {
-    usersService.findByEmail = () =>
-      Promise.resolve([{ id: 1, email: 'asdf@asdf', password: '123' } as User]);
+    await service.registration('asdf@asdf', '1a2b3c');
     await expect(service.login('asdf@asdf', '123456')).rejects.toEqual(
       new BadRequestException('E-mail ou senha inválidos'),
     );
