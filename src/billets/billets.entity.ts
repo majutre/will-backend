@@ -12,6 +12,6 @@ export class Billet {
   @Column()
   amount: string;
 
-  @ManyToOne(() => User, (user) => user.billets)
-  user: User;
+  // @ManyToOne(() => User, (user) => user.billets)
+  // user: User;
 }
