@@ -6,11 +6,14 @@ export class Billet {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()  
+  @Column()
   billet: string;
 
   @Column()
   amount: string;
+
+  @Column({ nullable: true })
+  transactionId: string;
 
   // @ManyToOne(() => User, (user) => user.billets)
   // user: User;
