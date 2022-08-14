@@ -19,8 +19,8 @@ export class User {
   })
   cashback: number;
 
-  @OneToMany(() => Billet, (billet) => billet.user)
-  billets: Billet[];
+  // @OneToMany(() => Billet, (billet) => billet.user)
+  // billets: Billet[];
 
   @AfterInsert()
   logInsert() {
