@@ -16,7 +16,22 @@ export class TransactionsService {
     return this.repository.save(transaction);
   }
 
-  update(id: string, attrs: Partial<Transaction>) {
-    
+  async update(id: number, attrs: Partial<Transaction>) {
+    const transaction = await this.findOne(id);
+
+    if (!transaction) {
+      throw new Error('Nenhum registro encontrado');
+    }
+
+    Object.assign(transaction, attrs);
+
+    return this.repository.save(transaction);
+  }
+
+  findOne(id: number) {
+    if (!id) {
+      return null;
+    }
+    return this.repository.findOneBy({ id: id });
   }
 }

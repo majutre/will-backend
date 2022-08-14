@@ -1,6 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany, AfterInsert, AfterRemove } from 'typeorm';
-
-import { Transaction } from 'src/transactions/transaction.entity';
+import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class User {
@@ -21,14 +19,4 @@ export class User {
 
   // @OneToMany(() => Transaction, (transaction) => transaction.user)
   // transactions: Transaction[];
-
-  @AfterInsert()
-  logInsert() {
-    console.log('Inserted User with id', this.id);
-  }
-
-  @AfterRemove()
-  logRemove() {
-    console.log('Removed User successfully');
-  }
 }
