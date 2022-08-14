@@ -10,10 +10,21 @@ describe('AuthService', () => {
   let usersService: Partial<UsersService>;
 
   beforeEach(async () => {
+    const users: User[] = [];
     usersService = {
-      findByEmail: () => Promise.resolve([]),
-      create: (email: string, password: string) =>
-        Promise.resolve({ id: 1, email, password } as User),
+      findByEmail: (email: string) => {
+        const filteredUsers = users.filter((user) => user.email === email);
+        return Promise.resolve(filteredUsers);
+      },
+      create: (email: string, password: string) => {
+        const user = {
+          id: Math.floor(Math.random() * 128),
+          email,
+          password,
+        } as User;
+        users.push(user);
+        return Promise.resolve(user);
+      },
     };
 
     const module = await Test.createTestingModule({
@@ -42,6 +53,12 @@ describe('AuthService', () => {
     expect(hash).toBeDefined();
   });
 
+  it('should return a user if correct password is provided', async () => {
+    await service.registration('asdf@asdf', '123456');
+    const user = await service.login('asdf@asdf', '123456');
+    expect(user).toBeDefined();
+  });
+
   it('should throw an error if user signs up with an e-mail in use', async () => {
     usersService.findByEmail = () =>
       Promise.resolve([{ id: 1, email: 'test', password: '123' } as User]);
@@ -51,6 +68,14 @@ describe('AuthService', () => {
   });
 
   it('should throw an error if user tries to login with an unused email', async () => {
+    await expect(service.login('asdf@asdf', '123456')).rejects.toEqual(
+      new BadRequestException('E-mail ou senha inválidos'),
+    );
+  });
+
+  it('should throw an error if invalid password is provided', async () => {
+    usersService.findByEmail = () =>
+      Promise.resolve([{ id: 1, email: 'asdf@asdf', password: '123' } as User]);
     await expect(service.login('asdf@asdf', '123456')).rejects.toEqual(
       new BadRequestException('E-mail ou senha inválidos'),
     );
