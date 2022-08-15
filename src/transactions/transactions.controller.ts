@@ -4,14 +4,21 @@ import {
   Controller,
   Get,
   Param,
-  Patch,
   Post,
   Response,
+  UseGuards,
 } from '@nestjs/common';
+
 import { CreateTransactionDto } from './dtos/create-transaction.dto';
 import { TransactionsService } from './transactions.service';
+import { AuthGuard } from 'src/guards/auth.guard';
+import { CurrentUser } from 'src/users/decorators/current-user.decorator';
+import { User } from 'src/users/user.entity';
+import { Serialize } from 'src/interceptors/serialize.interceptor';
+import { TransactionDto } from './dtos/transaction.dto';
+import { AdminGuard } from 'src/guards/admin.guard';
 
-@Controller('billets')
+@Controller('transactions')
 export class TransactionsController {
   public transactionId: number;
 
@@ -21,11 +28,11 @@ export class TransactionsController {
   listTransactions() {}
 
   @Post()
-  async createTransaction(@Body() body: CreateTransactionDto, @Response() res) {
+  @UseGuards(AuthGuard)
+  async createTransaction(@Body() body: CreateTransactionDto, @Response() res, @CurrentUser() user: User): Promise<TransactionDto> {
     const url = 'https://run.mocky.io/v3/0bca48f0-16db-4726-96a8-d4206306f698';
     const transaction = await this.transactionsService.create(
-      body.billet,
-      body.amount,
+      body, user
     );
     const transactionId = transaction.id;
       
@@ -38,6 +45,12 @@ export class TransactionsController {
     await this.updateTransaction(transactionId, confirmationId);
     
     return res.status(201).send(await this.transactionsService.findOne(transactionId))
+  }
+
+  @Post('/batch')
+  @UseGuards(AdminGuard)
+  batchOperation(@Body() body: []) {
+    
   }
 
   @Get('/:id')

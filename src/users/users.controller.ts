@@ -20,8 +20,8 @@ import { AuthGuard } from '../guards/auth.guard';
 import { AuthService } from './auth/auth.service';
 import { Serialize } from '../interceptors/serialize.interceptor';
 
-@Serialize(UserDto)
 @Controller('users')
+@Serialize(UserDto)
 export class UsersController {
   constructor(
     private usersService: UsersService,

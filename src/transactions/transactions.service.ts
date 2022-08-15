@@ -1,9 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { Serialize } from 'src/interceptors/serialize.interceptor';
 import { User } from 'src/users/user.entity';
 import { UsersService } from 'src/users/users.service';
 import { Repository } from 'typeorm';
 import { CreateTransactionDto } from './dtos/create-transaction.dto';
+import { TransactionDto } from './dtos/transaction.dto';
 
 import { Transaction } from './transaction.entity';
 
@@ -34,6 +36,7 @@ export class TransactionsService {
     return this.repository.save(transaction);
   }
 
+  @Serialize(TransactionDto)
   findOne(id: number) {
     if (!id) {
       return null;
