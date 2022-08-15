@@ -50,7 +50,7 @@ export class TransactionsController {
   @Post('/batch')
   @UseGuards(AdminGuard)
   batchOperation(@Body() body: []) {
-    
+    return body;
   }
 
   @Get('/:id')

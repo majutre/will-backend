@@ -36,7 +36,6 @@ export class TransactionsService {
     return this.repository.save(transaction);
   }
 
-  @Serialize(TransactionDto)
   findOne(id: number) {
     if (!id) {
       return null;

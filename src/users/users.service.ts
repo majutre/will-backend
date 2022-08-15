@@ -18,6 +18,7 @@ export class UsersService {
     if (!id) {
       return null;
     }
+
     return this.repository.findOneBy({ id: id });
   }
 
@@ -29,7 +30,7 @@ export class UsersService {
     const user = await this.findById(id);
 
     if (!user) {
-      throw new Error(`No users found with ID ${id}`);
+      throw new Error(`Nenhum usuário encontrado com o ID ${id}`);
     }
 
     return this.repository.remove(user);
@@ -37,13 +38,16 @@ export class UsersService {
 
   async addCashback(id: number, amount: number) {
     const user = await this.repository.findOneBy({ id: id });
+    this.calculateCashback(user, amount);
 
+    return this.repository.save(user);
+  }
+
+  private calculateCashback(user: User, amount: number) {
     if (amount <= 500) {
       user.cashback += amount * 0.1;
     } else {
       user.cashback += amount * 0.05;
     }
-
-    return this.repository.save(user);
   }
 }
