@@ -62,4 +62,4 @@ As rotas disponíveis podem ser consultadas via Postman: https://documenter.getp
 
 ## Roteiro
 
-Acesse o roteiro com a metodologia utilizada para o desenvolvimento [clicando aqui]()
+Acesse o roteiro com a metodologia utilizada para o desenvolvimento [clicando aqui](https://github.com/majutre/will-backend/blob/master/ROTEIRO.md)
