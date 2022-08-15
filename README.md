@@ -52,6 +52,8 @@ $ npm run test:e2e
 $ npm run test:cov
 ```
 
+## Rotas
+As rotas disponíveis podem ser consultadas via Postman: https://documenter.getpostman.com/view/17815727/VUjTihsy
 ## Por que essas tecnologias?
 
 - O NestJS é um framework com uma usabilidade fácil e uma documentação muito didática. É perfeito para desenvolver APIs e consumir/disponibilizar endpoints utilizando o padrão REST.
