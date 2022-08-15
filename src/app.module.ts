@@ -22,7 +22,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
       useFactory: (config: ConfigService) => {
         return {
           type: 'postgres',
-          host: 'localhost',
+          host: 'postgres',
           port: 5432,
           username: config.get<string>('PG_USERNAME'),
           password: config.get<string>('PG_PASSWORD'),

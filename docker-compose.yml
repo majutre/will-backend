@@ -1,0 +1,23 @@
+version: '3.2'
+services:
+  will-backend:
+    container_name: willbank-docker
+    build:
+      context: .
+      dockerfile: 'Dockerfile'
+    ports:
+      - '3000:3000'
+    volumes:
+      - .:/home/majutrevisan/Documents/Ruby/will-backend
+      - /home/majutrevisan/Documents/Ruby/will-backend/node_modules
+
+  postgres:
+    image: postgres:14
+    container_name: willbank-psql
+    restart: always
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${PG_USERNAME}
+      POSTGRES_PASSWORD: ${PG_PASSWORD}
+    ports:
+      - '5432:5432'
