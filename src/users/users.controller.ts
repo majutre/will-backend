@@ -19,7 +19,7 @@ import { User } from './user.entity';
 import { AuthGuard } from '../guards/auth.guard';
 import { AuthService } from './auth/auth.service';
 import { Serialize } from '../interceptors/serialize.interceptor';
-import { AdminGuard } from 'src/guards/admin.guard';
+import { AdminGuard } from '../guards/admin.guard';
 
 @Controller('users')
 @Serialize(UserDto)

@@ -14,6 +14,7 @@ describe('UsersController', () => {
   let emailAndPasswordMock = { email: 'asdf@asdf', password: '1a2b3c' };
 
   beforeEach(async () => {
+    const users: User[] = [];
     usersService = {
       findById: (id: number) => {
         return Promise.resolve({
@@ -25,9 +26,20 @@ describe('UsersController', () => {
       remove: (id: number) => {
         return Promise.resolve(emailAndPasswordMock as User);
       },
+      create: (email: string, password: string) => {
+        const user = {
+          id: Math.floor(Math.random() * 128),
+          email,
+          password,
+        } as User;
+        users.push(user);
+        return Promise.resolve(user);
+      },
     };
     authService = {
-      // registration: () => {},
+      registration: (email: string, password: string) => {
+        return Promise.resolve({ id: 1, email, password } as User)
+      },
       login: (email: string, password: string) => {
         return Promise.resolve({ id: 1, email, password } as User);
       },
@@ -76,10 +88,26 @@ describe('UsersController', () => {
   });
 
   it('#login should update session object and return a user', async () => {
-    const session = { userId: 0};
+    const session = { userId: 0 };
     const user = await controller.login(emailAndPasswordMock, session);
 
     expect(user.id).toEqual(1);
     expect(session.userId).toEqual(1);
+  });
+
+  it('#login should update session object and return a user', async () => {
+    const session = { userId: 0 };
+    const user = await controller.login(emailAndPasswordMock, session);
+
+    expect(user.id).toEqual(1);
+    expect(session.userId).toEqual(1);
+  });
+
+  it('#createUser should create a user', async () => {
+    const session = { userId: 0 };
+    await controller.createUser(emailAndPasswordMock, session);
+    const user = await controller.login(emailAndPasswordMock, session);
+
+    expect(user).toBeDefined();
   });
 });
