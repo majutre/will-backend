@@ -24,9 +24,6 @@ export class TransactionsController {
 
   constructor(private transactionsService: TransactionsService) {}
 
-  @Get()
-  listTransactions() {}
-
   @Post()
   @UseGuards(AuthGuard)
   async createTransaction(
@@ -63,6 +60,7 @@ export class TransactionsController {
   }
 
   @Get('/:id')
+  @UseGuards(AdminGuard)
   getTransaction(@Param('id') id: string) {
     return this.findTransaction(parseInt(id));
   }

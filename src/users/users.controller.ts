@@ -19,6 +19,7 @@ import { User } from './user.entity';
 import { AuthGuard } from '../guards/auth.guard';
 import { AuthService } from './auth/auth.service';
 import { Serialize } from '../interceptors/serialize.interceptor';
+import { AdminGuard } from 'src/guards/admin.guard';
 
 @Controller('users')
 @Serialize(UserDto)
@@ -57,6 +58,7 @@ export class UsersController {
   }
 
   @Get('/:id')
+  @UseGuards(AdminGuard)
   async findUser(@Param('id') id: string) {
     const user = await this.usersService.findById(parseInt(id));
 
@@ -68,6 +70,7 @@ export class UsersController {
   }
 
   @Delete('/:id')
+  @UseGuards(AdminGuard)
   async removeUser(@Param('id') id: string) {
     const user = await this.usersService.findById(parseInt(id));
 
