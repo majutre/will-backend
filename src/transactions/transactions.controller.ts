@@ -29,22 +29,31 @@ export class TransactionsController {
 
   @Post()
   @UseGuards(AuthGuard)
-  async createTransaction(@Body() body: CreateTransactionDto, @Response() res, @CurrentUser() user: User): Promise<TransactionDto> {
+  async createTransaction(
+    @Body() body: CreateTransactionDto,
+    @Response() res,
+    @CurrentUser() user: User,
+  ): Promise<TransactionDto> {
     const url = 'https://run.mocky.io/v3/0bca48f0-16db-4726-96a8-d4206306f698';
-    const transaction = await this.transactionsService.create(
-      body, user
-    );
+
+    if (parseInt(body.amount) < 0) {
+      return res.status(406).send('O valor informado é inválido');
+    }
+
+    const transaction = await this.transactionsService.create(body, user);
     const transactionId = transaction.id;
-      
+
     const response = await axios
       .post(url, body)
       .then((response) => response.data)
-      .catch((error) => console.log(error))
+      .catch((error) => console.log(error));
 
-    const confirmationId = response.split('"')[3];   
+    const confirmationId = response.split('"')[3];
     await this.updateTransaction(transactionId, confirmationId);
-    
-    return res.status(201).send(await this.transactionsService.findOne(transactionId))
+
+    return res
+      .status(201)
+      .send(await this.transactionsService.findOne(transactionId));
   }
 
   @Post('/batch')
@@ -61,7 +70,7 @@ export class TransactionsController {
   private findTransaction(id: number) {
     return this.transactionsService.findOne(id);
   }
-  
+
   private updateTransaction(transactionId, confirmationId) {
     return this.transactionsService.update(transactionId, {
       transactionId: confirmationId,
