@@ -1,39 +1,33 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# Will-Backend
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Ferramentas
+- [NestJS](https://github.com/nestjs/nest)
+- [Docker](https://github.com/docker)
+- [Postgres](https://github.com/postgres)
+  
+## Bibliotecas
+- [Class-validator](https://github.com/typestack/class-validator)
+- [Class-transformer](https://github.com/typestack/class-transformer)
+- [Express](https://github.com/expressjs/express)
+- [Express-Session](https://github.com/expressjs/session)
+- [TypeORM](https://github.com/typeorm/typeorm)
+- [Axios](https://github.com/axios/axios/)
+## Setup
 
-## Description
+### Utilizando docker
+```
+$ docker compose up
+```
+### Sem docker
+Em `app.module.ts:25` substituir '`postgres`' por '`localhost`'
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
-
-## Installation
-
-```bash
-$ npm install
+```ts
+// host: 'postgres',
+host: 'localhost',
 ```
 
-## Running the app
-
+No console, digitar uma das opções:
 ```bash
 # development
 $ npm run start
@@ -58,16 +52,12 @@ $ npm run test:e2e
 $ npm run test:cov
 ```
 
-## Support
+## Por que essas tecnologias?
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+- O NestJS é um framework com uma usabilidade fácil e uma documentação muito didática. É perfeito para desenvolver APIs e consumir/disponibilizar endpoints utilizando o padrão REST.
+- O Docker facilita o build do projeto em qualquer máquina, padronizando as configurações.
+- Considerando que trabalhamos nesse projeto com dados simples e tabelas estruturadas, o uso de um SGBD SQL foi o mais indicado. Utilizamos SQLite no início do projeto, pois é muito fácil de implementar e, principalmente, de testar. Ao final do projeto migramos para o Postgres, que é mais robusto e, em casos de apps que vão para o ambiente de produção, mais seguro. TypeORM foi a biblioteca escolhida para realizar o mapeamento objeto-relaciona.
 
-## Stay in touch
+## Roteiro
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
+Acesse o roteiro com a metodologia utilizada para o desenvolvimento [clicando aqui]()
