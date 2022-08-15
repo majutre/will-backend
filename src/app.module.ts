@@ -21,7 +21,11 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
       inject: [ConfigService],
       useFactory: (config: ConfigService) => {
         return {
-          type: 'sqlite',
+          type: 'postgres',
+          host: 'localhost',
+          port: 5432,
+          username: config.get<string>('PG_USERNAME'),
+          password: config.get<string>('PG_PASSWORD'),
           database: config.get<string>('DB_NAME'),
           entities: [User, Transaction],
           synchronize: true,

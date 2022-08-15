@@ -16,9 +16,12 @@ export class User {
   admin: boolean;
 
   @Column({
-    default: 0,
+    type: 'decimal',
+    default: 0.0,
+    precision: 10, 
+    scale: 2,
   })
-  cashback: number;
+  cashback: string;
 
   @OneToMany(() => Transaction, (transaction) => transaction.user)
   transactions: Transaction[];

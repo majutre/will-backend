@@ -38,16 +38,20 @@ export class UsersService {
 
   async addCashback(id: number, amount: number) {
     const user = await this.repository.findOneBy({ id: id });
-    this.calculateCashback(user, amount);
+    this.calculateCashback(user, amount)
 
     return this.repository.save(user);
   }
 
   private calculateCashback(user: User, amount: number) {
+    let userCashback = parseFloat(user.cashback)
+
     if (amount <= 500) {
-      user.cashback += amount * 0.1;
+      userCashback += amount * 0.1;
     } else {
-      user.cashback += amount * 0.05;
+      userCashback += amount * 0.05;
     }
+   
+    user.cashback = userCashback.toString();
   }
 }
