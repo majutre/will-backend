@@ -58,7 +58,7 @@ As rotas disponíveis podem ser consultadas via Postman: https://documenter.getp
 
 - O NestJS é um framework com uma usabilidade fácil e uma documentação muito didática. É perfeito para desenvolver APIs e consumir/disponibilizar endpoints utilizando o padrão REST.
 - O Docker facilita o build do projeto em qualquer máquina, padronizando as configurações.
-- Considerando que trabalhamos nesse projeto com dados simples e tabelas estruturadas, o uso de um SGBD SQL foi o mais indicado. Utilizamos SQLite no início do projeto, pois é muito fácil de implementar e, principalmente, de testar. Ao final do projeto migramos para o Postgres, que é mais robusto e, em casos de apps que vão para o ambiente de produção, mais seguro. TypeORM foi a biblioteca escolhida para realizar o mapeamento objeto-relaciona.
+- Considerando que trabalhamos nesse projeto com dados simples e tabelas estruturadas, o uso de um SGBD SQL foi o mais indicado. Utilizamos SQLite no início do projeto, pois é muito fácil de implementar e, principalmente, de testar. Ao final do projeto migramos para o Postgres, que é mais robusto e, em casos de apps que vão para o ambiente de produção, mais seguro. TypeORM foi a biblioteca escolhida para realizar o mapeamento objeto-relacional.
 
 ## Roteiro
 
